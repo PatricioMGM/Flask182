@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url("fondo-dibujado-mano-dia-nacional-medico_23-2149438164.avif");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  
+  .login-box {
+    width: 26%;
+    margin: 37%;
+    background-color: #e0e9ee;
+    padding: 20px;
+    margin-top: 10%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .login-box h1 {
+    text-align: center;
+    font-size: 24px;
+    box-shadow: #666;
+    
+  }
+  
+  .login-box input[type="text"],
+  .login-box input[type="password"] {
+    width: 94%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .login-box input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4c9eaf;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .login-box a {
+    text-decoration: none;
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .login-box a:hover {
+    color: #000;
+  }
+  
