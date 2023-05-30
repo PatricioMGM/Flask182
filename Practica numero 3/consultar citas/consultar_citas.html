@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Citas</title>
+    <title>Mostrar/Ocultar Tabla</title>
     <link rel="stylesheet" href="stylecc.css">
 </head>
 <body>
@@ -19,12 +19,14 @@
         </select>
 
         <h2>Datos de la Cita</h2>
+            
+            <div class="grup">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required>
 
-            <label for="fecha">Fecha:</label>
-            <input type="date" id="fecha" name="fecha" required>
-
-            <label for="hora">Hora:</label>
-            <input type="time" id="hora" name="hora" required>
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" name="hora" required>
+            </div>
 
             <label for="motivo">Motivo:</label>
             <textarea id="motivo" name="motivo" rows="4" required></textarea>
@@ -35,33 +37,50 @@
         </div>
     </form>
 
-    <h2>Lista de Citas</h2>
+    <h1>Lista de Citas</h1>
+    <div class="button-container">
+        <button id="mostrarTabla">Mostrar Citas</button>
+    </div>
+      
+    <div class="tab">
+        <table id = "miTabla">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Motivo</th>
+                <th>Acciones</th>
+            </tr>
+            <tr>
+                <td>John Doe</td>
+                <td>Paciente</td>
+                <td>2023-06-01</td>
+                <td>10:00 AM</td>
+                <td>Consulta general</td>
+                <td><button>Reimprimir</button></td>
+            </tr>
+            <tr>
+                <td>Jane Smith</td>
+                <td>Doctor</td>
+                <td>2023-06-02</td>
+                <td>02:30 PM</td>
+                <td>Revisión de pacientes</td>
+                <td><button>Reimprimir</button></td>
+            </tr>
+        </table>
+    </div>  
+    <script>
+        const botonMostrarTabla = document.getElementById("mostrarTabla");
+        const tabla = document.getElementById("miTabla");
 
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Motivo</th>
-            <th>Acciones</th>
-        </tr>
-        <tr>
-            <td>John Doe</td>
-            <td>Paciente</td>
-            <td>2023-06-01</td>
-            <td>10:00 AM</td>
-            <td>Consulta general</td>
-            <td><button>Reimprimir</button></td>
-        </tr>
-        <tr>
-            <td>Jane Smith</td>
-            <td>Doctor</td>
-            <td>2023-06-02</td>
-            <td>02:30 PM</td>
-            <td>Revisión de pacientes</td>
-            <td><button>Reimprimir</button></td>
-        </tr>
-    </table>
+        botonMostrarTabla.addEventListener("click", function() {
+            if (tabla.style.display === "none") {
+                tabla.style.display = "table"; // Muestra la tabla
+            } else {
+                tabla.style.display = "none"; // Oculta la tabla
+            }
+        });
+    </script>
 </body>
 </html>
