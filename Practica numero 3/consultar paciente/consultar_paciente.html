@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Paciente</title>
+    <link rel="stylesheet" href="stylec.css">
+</head>
+<body>
+    <h1>Registro de Paciente</h1>
+
+    <form action="guardar_datos.php" method="POST">
+        <label for="nombre_paciente">Nombre del Paciente:</label>
+        <input type="text" id="nombre_paciente" name="nombre_paciente" required><br><br>
+
+        <label for="nombre_doctor">Nombre del Doctor:</label>
+        <input type="text" id="nombre_doctor" name="nombre_doctor" required><br>
+
+        <div class="button-group">
+        <input type="button" value="Buscar">
+        <input type="button" value="Cancelar">
+        </div><br>
+
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+        </div>
+
+        <div>
+            <label for="apellido_m">Apellido Materno:</label>
+            <input type="text" id="apellido_m" name="apellido_m" required><br><br>
+        </div>
+
+        <div>
+            <label for="apellido_p">Apellido Paterno:</label>
+            <input type="text" id="apellido_p" name="apellido_p" required><br><br>
+        </div>
+
+        <div>
+            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required><br><br>
+        </div>
+
+        <div>
+            <label for="enfermedades_cronicas">Enfermedades Crónicas:</label>
+            <textarea id="enfermedades_cronicas" name="enfermedades_cronicas" rows="4" required></textarea><br><br>
+        </div>
+
+        <div>
+            <label for="alergias">Alergias:</label>
+            <textarea id="alergias" name="alergias" rows="4" required></textarea><br><br>
+        </div>
+
+        <div>
+            <label for="antecedentes_familiares">Antecedentes Familiares:</label>
+            <textarea id="antecedentes_familiares" name="antecedentes_familiares" rows="4" required></textarea><br>
+        </div>
+
+        <div class="button-group">
+            <input type="submit" value="Guardar">
+            <input type="reset" value="Cancelar">
+        </div>
+    </form>
+</body>
+</html>
