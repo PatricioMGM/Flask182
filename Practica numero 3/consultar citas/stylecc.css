@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url("imagenes/pexels-daniel-absi-952670.jpg");
-    background-color: gray;
+    background-image: url("pexels-daniel-absi-952670.jpg");
+    background-color: rgb(255, 249, 136);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -30,28 +30,26 @@ label {
 input[type="text"]{
     width: 97%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #e7bfbf;
     border-radius: 4px;
 }
 select {
     width: 101%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #deaaaa;
     border-radius: 4px;
 }
 
 textarea {
     width: 97%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #de9c9c;
     border-radius: 4px;
     resize: vertical;
 }
 
 input[type="submit"],
 input[type="reset"],
-input[type="date"],
-input[type="time"],
 .button-group button {
     display: inline-block;
     padding: 10px 20px;
@@ -66,8 +64,6 @@ input[type="time"],
 
 input[type="submit"]:hover,
 input[type="reset"]:hover,
-input[type="date"]:hover,
-input[type="time"]:hover,
 .button-group button:hover {
     background-color: #0056b3;
 }
