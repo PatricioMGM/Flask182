@@ -8,68 +8,71 @@
 <body>
     <h1>Registro de Citas</h1>
 
-    <form>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
+    <div class="container">
+        <form>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
 
-        <label for="tipo">Tipo:</label>
-        <select id="tipo" name="tipo">
-            <option value="paciente">Paciente</option>
-            <option value="doctor">Doctor</option>
-        </select>
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo">
+                <option value="paciente">Paciente</option>
+                <option value="doctor">Doctor</option>
+            </select>
 
-        <h2>Datos de la Cita</h2>
-            
+            <h2>Datos de la Cita</h2>
+
             <div class="grup">
                 <label for="fecha">Fecha:</label>
                 <input type="date" id="fecha" name="fecha" required>
 
                 <label for="hora">Hora:</label>
-                <input type="time" id="hora" name="hora" required>
+                <input type="time" id="hora" name="hora" required><br><br>
             </div>
 
-            <label for="motivo">Motivo:</label>
+            <br><label for="motivo">Motivo:</label>
             <textarea id="motivo" name="motivo" rows="4" required></textarea>
 
-        <div class="button-group">
-            <input type="submit" value="Aceptar">
-            <input type="reset" value="Limpiar">
-        </div>
-    </form>
+            <div class="button-group">
+                <input type="submit" value="Aceptar">
+                <input type="reset" value="Limpiar">
+            </div>
+        </form>
 
-    <h1>Lista de Citas</h1>
-    <div class="button-container">
-        <button id="mostrarTabla">Mostrar Citas</button>
+        <div class="tab">
+            <h1>Lista de Citas</h1>
+            <div class="button-container">
+                <button id="mostrarTabla">Mostrar Citas</button>
+            </div>
+
+            <table id="miTabla" style="display: none;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Motivo</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Paciente</td>
+                    <td>2023-06-01</td>
+                    <td>10:00 AM</td>
+                    <td>Consulta general</td>
+                    <td><button>Reimprimir</button></td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>Doctor</td>
+                    <td>2023-06-02</td>
+                    <td>02:30 PM</td>
+                    <td>Revisión de pacientes</td>
+                    <td><button>Reimprimir</button></td>
+                </tr>
+            </table>
+        </div>
     </div>
-      
-    <div class="tab">
-        <table id = "miTabla">
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Motivo</th>
-                <th>Acciones</th>
-            </tr>
-            <tr>
-                <td>John Doe</td>
-                <td>Paciente</td>
-                <td>2023-06-01</td>
-                <td>10:00 AM</td>
-                <td>Consulta general</td>
-                <td><button>Reimprimir</button></td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>Doctor</td>
-                <td>2023-06-02</td>
-                <td>02:30 PM</td>
-                <td>Revisión de pacientes</td>
-                <td><button>Reimprimir</button></td>
-            </tr>
-        </table>
-    </div>  
+
     <script>
         const botonMostrarTabla = document.getElementById("mostrarTabla");
         const tabla = document.getElementById("miTabla");
