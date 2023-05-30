@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Exploración Médica</title>
+    <link rel="stylesheet" href="styled.css">
+</head>
+<body>
+    <h1>Registro de Exploración Médica</h1>
+    
+    <form action="guardar_datos.php" method="POST">
+        <label for="nombre">Nombre del Paciente:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        
+        <label for="fecha_cita">Fecha de la Cita:</label>
+        <input type="date" id="fecha_cita" name="fecha_cita" required><br><br>
+        
+        <label for="peso">Peso:</label>
+        <input type="text" id="peso" name="peso" required><br><br>
+        
+        <label for="altura">Altura:</label>
+        <input type="text" id="altura" name="altura" required><br><br>
+        
+        <label for="temperatura">Temperatura:</label>
+        <input type="text" id="temperatura" name="temperatura" required><br><br>
+        
+        <label for="l_m">L/M:</label>
+        <input type="text" id="l_m" name="l_m" required><br><br>
+        
+        <label for="so">SO:</label>
+        <input type="text" id="so" name="so" required><br><br>
+        
+        <label for="glucosa">Glucosa:</label>
+        <input type="text" id="glucosa" name="glucosa" required><br><br>
+        
+        <label for="diagnostico">Diagnóstico:</label>
+        <textarea id="diagnostico" name="diagnostico" rows="4" required></textarea><br><br>
+        
+        <label for="tratamiento">Tratamiento:</label>
+        <textarea id="tratamiento" name="tratamiento" rows="4" required></textarea><br><br>
+        
+        <label for="estudios">Estudios:</label>
+        <textarea id="estudios" name="estudios" rows="4" required></textarea><br><br>
+        
+        <div class="button-group">
+            <input type="submit" value="Guardar">
+            <input type="reset" value="Limpiar">
+            <input type="button" value="Salir">
+        </div>
+    </form>
+</body>
+</html>
