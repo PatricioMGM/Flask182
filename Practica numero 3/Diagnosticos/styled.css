@@ -97,3 +97,9 @@ h1 {
 .button-group input:hover {
     background-color: #0056b3;
 }
+
+.group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
