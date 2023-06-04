@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS bebidas;
 create database bebidas;
 use bebidas;
 CREATE TABLE Bebidas (
@@ -20,5 +21,36 @@ id int not null primary key auto_increment,
 Marca varchar(50)
 );
 
-create user 'almacenbeb'@'localhost' identified by '123almabb';
+create user 'almacenbeb'@'localhost' identified by '';
 grant all privileges on bebidas.* to 'almacenbeb'@'localhost';
+
+INSERT INTO Marca (Marca) VALUES 
+('Coca-Cola'),
+('Pepsi'),
+('Sprite'),
+('Lipton'),
+('Gatorade'),
+('Fanta'),
+('Nescafé'),
+('Redbull'),
+('Monster'),
+('Sevenup')
+;
+
+INSERT INTO Clasificaciones (clasificacion) VALUES 
+('Agua mineral'),
+('Bebidas energéticas'),
+('Refrescos'),
+('Bebidas gaseosas'),
+('Té helado'),
+('Café'),
+('Bebidas isotónicas'),
+('Bebidas alcohólicas'),
+('Batidos y smoothies'),
+('Agua natural')
+;
+
+insert into bebidas (Nombre, Precio, id_clasificacion, id_marca) values
+('Pepsi',15,3,2),
+('coca-cola',18,3,1)
+;
