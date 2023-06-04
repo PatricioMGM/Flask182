@@ -12,7 +12,16 @@ conexion = mysql.connector.connect(
 # Crear el cursor para ejecutar las consultas
 cursor = conexion.cursor()
 
+# Declarar la variable global para tabla_registros
+tabla_registros = None
+
 def mostrar_registros():
+    global tabla_registros
+
+    # Eliminar los registros existentes en la tabla si ya existe
+    if tabla_registros:
+        tabla_registros.destroy()
+
     # Consultar los datos de la tabla Bebidas con los nombres de clasificación y marca asociados
     consulta = """
     SELECT b.id, b.Nombre, b.Precio, c.clasificacion, m.Marca
@@ -26,9 +35,6 @@ def mostrar_registros():
     # Crear un widget Treeview para mostrar los registros en una tabla
     tabla_registros = ttk.Treeview(pestaña_mostrar, columns=("ID", "Nombre", "Precio", "Clasificación", "Marca"), show="headings")
 
-    # Eliminar los widgets existentes en la pestaña
-
-        
     # Configurar las columnas de la tabla
     tabla_registros.heading("ID", text="ID")
     tabla_registros.heading("Nombre", text="Nombre")
@@ -40,7 +46,21 @@ def mostrar_registros():
     for bebida in bebidas:
         tabla_registros.insert("", tk.END, values=(bebida[0], bebida[1], bebida[2], bebida[3], bebida[4]))
 
+    # Ajustar el tamaño de la tabla al cambiar el tamaño de la ventana
     tabla_registros.pack(fill="both", expand=True)
+    tabla_registros.bind("<Configure>", lambda e: tabla_registros.pack_configure(expand=True))
+
+    # Centrar los registros en la tabla
+    for column in ("ID", "Nombre", "Precio", "Clasificación", "Marca"):
+        tabla_registros.column(column, anchor="center")
+
+    # Establecer el ancho de las columnas de la tabla
+    tabla_registros.column("ID", width=50)
+    tabla_registros.column("Nombre", width=100)
+    tabla_registros.column("Precio", width=80)
+    tabla_registros.column("Clasificación", width=100)
+    tabla_registros.column("Marca", width=100)
+
 
 def agregar_registro():
     # Crear etiquetas y campos de entrada para los datos del nuevo registro
@@ -54,21 +74,27 @@ def agregar_registro():
     campo_precio = tk.Entry(pestaña_agregar)
     campo_precio.pack()
 
-    etiqueta_id_clasificacion = tk.Label(pestaña_agregar, text="ID Clasificación:")
-    etiqueta_id_clasificacion.pack()
-    campo_id_clasificacion = tk.Entry(pestaña_agregar)
-    campo_id_clasificacion.pack()
+    # Realizar una consulta para obtener las opciones de clasificación desde la base de datos
+    cursor.execute("SELECT id, clasificacion FROM Clasificaciones")
+    opciones_clasificacion = cursor.fetchall()
+    etiqueta_clasificacion = tk.Label(pestaña_agregar, text="Clasificación:")
+    etiqueta_clasificacion.pack()
+    campo_clasificacion = ttk.Combobox(pestaña_agregar, values=opciones_clasificacion)
+    campo_clasificacion.pack()
 
-    etiqueta_id_marca = tk.Label(pestaña_agregar, text="ID Marca:")
-    etiqueta_id_marca.pack()
-    campo_id_marca = tk.Entry(pestaña_agregar)
-    campo_id_marca.pack()
-    
+    # Realizar una consulta para obtener las opciones de marca desde la base de datos
+    cursor.execute("SELECT id, marca FROM Marca")
+    opciones_marca = cursor.fetchall()
+    etiqueta_marca = tk.Label(pestaña_agregar, text="Marca:")
+    etiqueta_marca.pack()
+    campo_marca = ttk.Combobox(pestaña_agregar, values=opciones_marca)
+    campo_marca.pack()
+
     def agregar():
         nombre = campo_nombre.get()
         precio = campo_precio.get()
-        id_clasificacion = campo_id_clasificacion.get()
-        id_marca = campo_id_marca.get()
+        id_clasificacion = campo_clasificacion.get().split()[0]
+        id_marca = campo_marca.get().split()[0]
 
         # Insertar el nuevo registro en la tabla Bebidas
         consulta = """
@@ -89,6 +115,7 @@ def agregar_registro():
     # Crear una etiqueta para mostrar mensajes de confirmación
     etiqueta_confirmacion = tk.Label(pestaña_agregar)
     etiqueta_confirmacion.pack()
+
 
 def eliminar_registro():
     # Crear una etiqueta y un campo de entrada para el ID del registro a eliminar
@@ -134,14 +161,26 @@ def actualizar_registro():
     campo_precio = tk.Entry(pestaña_actualizar)
     campo_precio.pack()
 
+    etiqueta_clasificacion = tk.Label(pestaña_actualizar, text="Nueva clasificación:")
+    etiqueta_clasificacion.pack()
+    combobox_clasificacion = ttk.Combobox(pestaña_actualizar)
+    combobox_clasificacion.pack()
+
+    etiqueta_marca = tk.Label(pestaña_actualizar, text="Nueva marca:")
+    etiqueta_marca.pack()
+    combobox_marca = ttk.Combobox(pestaña_actualizar)
+    combobox_marca.pack()
+
     def actualizar():
         id_registro = campo_id.get()
         nombre = campo_nombre.get()
         precio = campo_precio.get()
+        id_clasificacion = clasificaciones_ids[combobox_clasificacion.current()]
+        id_marca = marcas_ids[combobox_marca.current()]
 
         # Actualizar el registro con los nuevos valores en la tabla Bebidas
-        consulta = "UPDATE Bebidas SET Nombre = %s, Precio = %s WHERE id = %s"
-        valores = (nombre, precio, id_registro)
+        consulta = "UPDATE Bebidas SET Nombre = %s, Precio = %s, id_clasificacion = %s, id_marca = %s WHERE id = %s"
+        valores = (nombre, precio, id_clasificacion, id_marca, id_registro)
         cursor.execute(consulta, valores)
         conexion.commit()
 
@@ -156,16 +195,80 @@ def actualizar_registro():
     etiqueta_confirmacion = tk.Label(pestaña_actualizar)
     etiqueta_confirmacion.pack()
 
-def calcular_precio_promedio():
-    # Calcular el precio promedio de las bebidas
-    consulta = "SELECT AVG(Precio) FROM Bebidas"
-    cursor.execute(consulta)
-    resultado = cursor.fetchone()[0]
+    # Obtener las clasificaciones de la base de datos
+    cursor.execute("SELECT id, clasificacion FROM Clasificaciones")
+    clasificaciones = cursor.fetchall()
+    clasificaciones_ids = [clasificacion[0] for clasificacion in clasificaciones]
+    clasificaciones_nombres = [clasificacion[1] for clasificacion in clasificaciones]
 
-    # Mostrar el resultado en una etiqueta
-    etiqueta_resultado = tk.Label(pestaña_calcular)
-    etiqueta_resultado.config(text=f"Precio promedio de las bebidas: {resultado}")
-    etiqueta_resultado.pack()
+    # Obtener las marcas de la base de datos
+    cursor.execute("SELECT id, Marca FROM Marca")
+    marcas = cursor.fetchall()
+    marcas_ids = [marca[0] for marca in marcas]
+    marcas_nombres = [marca[1] for marca in marcas]
+
+    # Establecer las opciones de clasificación y marca en los comboboxes
+    combobox_clasificacion['values'] = clasificaciones_nombres
+    combobox_marca['values'] = marcas_nombres
+
+
+
+def calcular_precio_promedio():
+    # Limpiar la pestaña antes de calcular el precio promedio
+    for widget in pestaña_calcular.winfo_children():
+        if widget != boton_calcular:  # Evitar eliminar el botón
+            widget.destroy()
+    
+    # Calcular el precio promedio de las bebidas
+    consulta_promedio = "SELECT AVG(Precio) FROM Bebidas"
+    cursor.execute(consulta_promedio)
+    precio_promedio = cursor.fetchone()[0]
+
+    # Mostrar el resultado del precio promedio en una etiqueta
+    etiqueta_promedio = tk.Label(pestaña_calcular)
+    etiqueta_promedio.config(text=f"Precio promedio de las bebidas: {round(precio_promedio, 2)}")
+    etiqueta_promedio.pack()
+
+    # Consultar la cantidad de bebidas por marca
+    consulta_marca = """
+    SELECT m.Marca, COUNT(*) AS Cantidad
+    FROM Bebidas b
+    JOIN Marca m ON b.id_marca = m.id
+    GROUP BY m.Marca
+    """
+    cursor.execute(consulta_marca)
+    marcas = cursor.fetchall()
+
+    # Mostrar la cantidad de bebidas por marca en una etiqueta
+    etiqueta_marcas = tk.Label(pestaña_calcular)
+    etiqueta_marcas.config(text="Cantidad de bebidas por marca:")
+    etiqueta_marcas.pack()
+
+    for marca in marcas:
+        etiqueta_marca = tk.Label(pestaña_calcular)
+        etiqueta_marca.config(text=f"{marca[0]}: {marca[1]} bebidas")
+        etiqueta_marca.pack()
+
+    # Consultar la cantidad de bebidas por clasificación
+    consulta_clasificacion = """
+    SELECT c.clasificacion, COUNT(*) AS Cantidad
+    FROM Bebidas b
+    JOIN Clasificaciones c ON b.id_clasificacion = c.id
+    GROUP BY c.clasificacion
+    """
+    cursor.execute(consulta_clasificacion)
+    clasificaciones = cursor.fetchall()
+
+    # Mostrar la cantidad de bebidas por clasificación en una etiqueta
+    etiqueta_clasificaciones = tk.Label(pestaña_calcular)
+    etiqueta_clasificaciones.config(text="Cantidad de bebidas por clasificación:")
+    etiqueta_clasificaciones.pack()
+
+    for clasificacion in clasificaciones:
+        etiqueta_clasificacion = tk.Label(pestaña_calcular)
+        etiqueta_clasificacion.config(text=f"{clasificacion[0]}: {clasificacion[1]} bebidas")
+        etiqueta_clasificacion.pack()
+
 
 # Crear la ventana principal
 ventana = tk.Tk()
@@ -192,6 +295,12 @@ pestañas.add(pestaña_calcular, text="Calcular Precio Promedio")
 # Mostrar el control de pestañas
 pestañas.pack(expand=True, fill="both")
 
+# Llamar a las funciones correspondientes para mostrar el contenido en las pestañas
+
+agregar_registro()
+eliminar_registro()
+actualizar_registro()
+
 # Crear una etiqueta para mostrar el resultado del cálculo del precio promedio
 etiqueta_resultado = tk.Label(pestaña_calcular)
 etiqueta_resultado.pack()
@@ -199,15 +308,6 @@ etiqueta_resultado.pack()
 # Crear botones para cada funcionalidad
 boton_mostrar = tk.Button(pestaña_mostrar, text="Mostrar Registros", command=mostrar_registros)
 boton_mostrar.pack()
-
-boton_agregar = tk.Button(pestaña_agregar, text="Agregar Registro", command=agregar_registro)
-boton_agregar.pack()
-
-boton_eliminar = tk.Button(pestaña_eliminar, text="Eliminar Registro", command=eliminar_registro)
-boton_eliminar.pack()
-
-boton_actualizar = tk.Button(pestaña_actualizar, text="Actualizar Registro", command=actualizar_registro)
-boton_actualizar.pack()
 
 boton_calcular = tk.Button(pestaña_calcular, text="Calcular Precio Promedio", command=calcular_precio_promedio)
 boton_calcular.pack()
