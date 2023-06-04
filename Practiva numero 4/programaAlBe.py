@@ -290,7 +290,7 @@ pestañas.add(pestaña_mostrar, text="Mostrar Registros")
 pestañas.add(pestaña_agregar, text="Agregar Registro")
 pestañas.add(pestaña_eliminar, text="Eliminar Registro")
 pestañas.add(pestaña_actualizar, text="Actualizar Registro")
-pestañas.add(pestaña_calcular, text="Calcular Precio Promedio")
+pestañas.add(pestaña_calcular, text="Calculos")
 
 # Mostrar el control de pestañas
 pestañas.pack(expand=True, fill="both")
