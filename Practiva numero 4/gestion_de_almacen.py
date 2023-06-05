@@ -122,24 +122,55 @@ def agregar_registro():
     etiqueta_confirmacion = tk.Label(pestaña_agregar)
     etiqueta_confirmacion.pack()
 
+campo_id = None  # Variable global para el Combobox
+
 def eliminar_registro():
-    # Crear una etiqueta y un campo de entrada para el ID del registro a eliminar
-    etiqueta_id = tk.Label(pestaña_eliminar, text="ID del registro a eliminar:")
-    etiqueta_id.pack()
-    campo_id = tk.Entry(pestaña_eliminar)
-    campo_id.pack()
+    campo_id = ttk.Combobox(pestaña_eliminar, values=[])  # Crear Combobox con lista vacía
+
+    def refrescar_combobox():
+        # Obtener los registros de la tabla Bebidas con sus IDs
+        consulta = "SELECT id, Nombre FROM Bebidas"
+        cursor.execute(consulta)
+        registros = cursor.fetchall()
+
+        # Crear una lista de registros con sus IDs
+        lista_registros = [f"ID: {registro[0]}  {registro[1]}" for registro in registros]
+
+        # Establecer los valores del Combobox
+        campo_id['values'] = lista_registros
+
+    # Llamar a la función para actualizar los valores del Combobox al cargar la pestaña
+    refrescar_combobox()
 
     def eliminar():
-        id_registro = campo_id.get()
+        # Obtener el valor del registro seleccionado
+        seleccion = campo_id.get()
 
-        # Eliminar el registro con el ID especificado de la tabla Bebidas
-        consulta = "DELETE FROM Bebidas WHERE id = %s"
-        valores = (id_registro,)
-        cursor.execute(consulta, valores)
-        conexion.commit()
+        if seleccion:
+            # Obtener el ID del registro seleccionado
+            id_registro = seleccion.split('ID: ')[1].split()[0].strip()
 
-        # Mostrar mensaje de confirmación
-        etiqueta_confirmacion.config(text="Registro eliminado correctamente")
+            # Eliminar el registro con el ID especificado de la tabla Bebidas
+            consulta = "DELETE FROM Bebidas WHERE id = %s"
+            valores = (id_registro,)
+            cursor.execute(consulta, valores)
+            conexion.commit()
+
+            # Mostrar mensaje de confirmación
+            etiqueta_confirmacion.config(text="Registro eliminado correctamente")
+
+            # Refrescar el Combobox después de eliminar el registro
+            refrescar_combobox()
+        else:
+            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro")
+
+    # Crear un Combobox con los registros y sus IDs
+    campo_id = ttk.Combobox(pestaña_eliminar)
+    campo_id.pack()
+
+    # Crear un botón para refrescar el Combobox
+    boton_refrescar = tk.Button(pestaña_eliminar, text="Refrescar", command=refrescar_combobox)
+    boton_refrescar.pack()
 
     # Crear un botón para eliminar el registro
     boton_eliminar = tk.Button(pestaña_eliminar, text="Eliminar", command=eliminar)
@@ -148,6 +179,10 @@ def eliminar_registro():
     # Crear una etiqueta para mostrar mensajes de confirmación
     etiqueta_confirmacion = tk.Label(pestaña_eliminar)
     etiqueta_confirmacion.pack()
+
+    # Refrescar el Combobox al cargar la función eliminar_registro()
+    refrescar_combobox()
+
 
 def actualizar_registro():
     # Crear etiquetas y campos de entrada para los datos del registro a actualizar
