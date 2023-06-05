@@ -122,8 +122,6 @@ def agregar_registro():
     etiqueta_confirmacion = tk.Label(pestaña_agregar)
     etiqueta_confirmacion.pack()
 
-
-
 def eliminar_registro():
     # Crear una etiqueta y un campo de entrada para el ID del registro a eliminar
     etiqueta_id = tk.Label(pestaña_eliminar, text="ID del registro a eliminar:")
