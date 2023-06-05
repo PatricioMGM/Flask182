@@ -74,27 +74,33 @@ def agregar_registro():
     campo_precio = tk.Entry(pestaña_agregar)
     campo_precio.pack()
 
-    # Realizar una consulta para obtener las opciones de clasificación desde la base de datos
+    # Obtener las clasificaciones de la base de datos
     cursor.execute("SELECT id, clasificacion FROM Clasificaciones")
-    opciones_clasificacion = cursor.fetchall()
+    clasificaciones = cursor.fetchall()
+    clasificaciones_ids = [clasificacion[0] for clasificacion in clasificaciones]
+    clasificaciones_nombres = [clasificacion[1] for clasificacion in clasificaciones]
+
+    # Obtener las marcas de la base de datos
+    cursor.execute("SELECT id, Marca FROM Marca")
+    marcas = cursor.fetchall()
+    marcas_ids = [marca[0] for marca in marcas]
+    marcas_nombres = [marca[1] for marca in marcas]
+
     etiqueta_clasificacion = tk.Label(pestaña_agregar, text="Clasificación:")
     etiqueta_clasificacion.pack()
-    campo_clasificacion = ttk.Combobox(pestaña_agregar, values=opciones_clasificacion)
+    campo_clasificacion = ttk.Combobox(pestaña_agregar, values=clasificaciones_nombres)
     campo_clasificacion.pack()
 
-    # Realizar una consulta para obtener las opciones de marca desde la base de datos
-    cursor.execute("SELECT id, marca FROM Marca")
-    opciones_marca = cursor.fetchall()
     etiqueta_marca = tk.Label(pestaña_agregar, text="Marca:")
     etiqueta_marca.pack()
-    campo_marca = ttk.Combobox(pestaña_agregar, values=opciones_marca)
+    campo_marca = ttk.Combobox(pestaña_agregar, values=marcas_nombres)
     campo_marca.pack()
 
     def agregar():
         nombre = campo_nombre.get()
         precio = campo_precio.get()
-        id_clasificacion = campo_clasificacion.get().split()[0]
-        id_marca = campo_marca.get().split()[0]
+        id_clasificacion = clasificaciones_ids[clasificaciones_nombres.index(campo_clasificacion.get())]
+        id_marca = marcas_ids[marcas_nombres.index(campo_marca.get())]
 
         # Insertar el nuevo registro en la tabla Bebidas
         consulta = """
@@ -115,6 +121,7 @@ def agregar_registro():
     # Crear una etiqueta para mostrar mensajes de confirmación
     etiqueta_confirmacion = tk.Label(pestaña_agregar)
     etiqueta_confirmacion.pack()
+
 
 
 def eliminar_registro():
