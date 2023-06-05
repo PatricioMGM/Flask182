@@ -185,11 +185,47 @@ def eliminar_registro():
 
 
 def actualizar_registro():
-    # Crear etiquetas y campos de entrada para los datos del registro a actualizar
-    etiqueta_id = tk.Label(pestaña_actualizar, text="ID del registro a actualizar:")
-    etiqueta_id.pack()
-    campo_id = tk.Entry(pestaña_actualizar)
+    # Crear Combobox para seleccionar el registro a actualizar
+    campo_id = ttk.Combobox(pestaña_actualizar, values=[], state="readonly")
     campo_id.pack()
+
+    def refrescar_combobox():
+        # Obtener los registros de la tabla Bebidas con sus IDs
+        consulta = "SELECT id, Nombre FROM Bebidas"
+        cursor.execute(consulta)
+        registros = cursor.fetchall()
+
+        # Crear una lista de registros con sus IDs
+        lista_registros = [f"ID: {registro[0]}  {registro[1]}" for registro in registros]
+
+        # Establecer los valores del Combobox
+        campo_id['values'] = lista_registros
+
+    def actualizar():
+        seleccion = campo_id.get()
+        if seleccion:
+            # Obtener el ID del registro seleccionado
+            id_registro = seleccion.split(':')[1].strip().split(' ')[0]
+
+            nombre = campo_nombre.get()
+            precio = campo_precio.get()
+            id_clasificacion = clasificaciones_ids[combobox_clasificacion.current()]
+            id_marca = marcas_ids[combobox_marca.current()]
+
+            # Actualizar el registro con los nuevos valores en la tabla Bebidas
+            consulta = "UPDATE Bebidas SET Nombre = %s, Precio = %s, id_clasificacion = %s, id_marca = %s WHERE id = %s"
+            valores = (nombre, precio, id_clasificacion, id_marca, id_registro)
+            cursor.execute(consulta, valores)
+            conexion.commit()
+
+            # Mostrar mensaje de confirmación
+            etiqueta_confirmacion.config(text="Registro actualizado correctamente")
+        else:
+            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro")
+
+    def refrescar():
+        refrescar_combobox()
+        etiqueta_confirmacion.config(text="")
 
     etiqueta_nombre = tk.Label(pestaña_actualizar, text="Nuevo nombre:")
     etiqueta_nombre.pack()
@@ -211,25 +247,13 @@ def actualizar_registro():
     combobox_marca = ttk.Combobox(pestaña_actualizar)
     combobox_marca.pack()
 
-    def actualizar():
-        id_registro = campo_id.get()
-        nombre = campo_nombre.get()
-        precio = campo_precio.get()
-        id_clasificacion = clasificaciones_ids[combobox_clasificacion.current()]
-        id_marca = marcas_ids[combobox_marca.current()]
-
-        # Actualizar el registro con los nuevos valores en la tabla Bebidas
-        consulta = "UPDATE Bebidas SET Nombre = %s, Precio = %s, id_clasificacion = %s, id_marca = %s WHERE id = %s"
-        valores = (nombre, precio, id_clasificacion, id_marca, id_registro)
-        cursor.execute(consulta, valores)
-        conexion.commit()
-
-        # Mostrar mensaje de confirmación
-        etiqueta_confirmacion.config(text="Registro actualizado correctamente")
-
-    # Crear un botón para actualizar el registro
+    # Botón de actualizar
     boton_actualizar = tk.Button(pestaña_actualizar, text="Actualizar", command=actualizar)
     boton_actualizar.pack()
+
+    # Botón de refrescar
+    boton_refrescar = tk.Button(pestaña_actualizar, text="Refrescar", command=refrescar)
+    boton_refrescar.pack()
 
     # Crear una etiqueta para mostrar mensajes de confirmación
     etiqueta_confirmacion = tk.Label(pestaña_actualizar)
@@ -251,7 +275,8 @@ def actualizar_registro():
     combobox_clasificacion['values'] = clasificaciones_nombres
     combobox_marca['values'] = marcas_nombres
 
-
+    # Llamar a la función para actualizar los valores del Combobox al cargar la pestaña
+    refrescar_combobox()
 
 def calcular_precio_promedio():
     # Limpiar la pestaña antes de calcular el precio promedio
