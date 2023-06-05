@@ -95,6 +95,7 @@ def agregar_registro():
     etiqueta_marca.pack()
     campo_marca = ttk.Combobox(pestaña_agregar, values=marcas_nombres)
     campo_marca.pack()
+    
 
     def agregar():
         nombre = campo_nombre.get()
@@ -167,6 +168,7 @@ def eliminar_registro():
     # Crear un Combobox con los registros y sus IDs
     campo_id = ttk.Combobox(pestaña_eliminar)
     campo_id.pack()
+    
 
     # Crear un botón para refrescar el Combobox
     boton_refrescar = tk.Button(pestaña_eliminar, text="Refrescar", command=refrescar_combobox)
@@ -185,6 +187,9 @@ def eliminar_registro():
 
 
 def actualizar_registro():
+    
+    #declarar id marcas con los valores
+    
     # Crear Combobox para seleccionar el registro a actualizar
     campo_id = ttk.Combobox(pestaña_actualizar, values=[], state="readonly")
     campo_id.pack()
