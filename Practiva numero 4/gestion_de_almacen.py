@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import mysql.connector
+from ttkthemes import ThemedStyle
 
 # Establecer la conexión con la base de datos
 conexion = mysql.connector.connect(
@@ -64,12 +65,12 @@ def mostrar_registros():
 
 def agregar_registro():
     # Crear etiquetas y campos de entrada para los datos del nuevo registro
-    etiqueta_nombre = tk.Label(pestaña_agregar, text="Nombre:")
+    etiqueta_nombre = tk.Label(pestaña_agregar, text="Nombre:", bg="springGreen3", fg="white")
     etiqueta_nombre.pack()
     campo_nombre = tk.Entry(pestaña_agregar)
     campo_nombre.pack()
 
-    etiqueta_precio = tk.Label(pestaña_agregar, text="Precio:")
+    etiqueta_precio = tk.Label(pestaña_agregar, text="Precio:", bg="springGreen3", fg="white")
     etiqueta_precio.pack()
     campo_precio = tk.Entry(pestaña_agregar)
     campo_precio.pack()
@@ -86,12 +87,12 @@ def agregar_registro():
     marcas_ids = [marca[0] for marca in marcas]
     marcas_nombres = [marca[1] for marca in marcas]
 
-    etiqueta_clasificacion = tk.Label(pestaña_agregar, text="Clasificación:")
+    etiqueta_clasificacion = tk.Label(pestaña_agregar, text="Clasificación:", bg="springGreen3", fg="white")
     etiqueta_clasificacion.pack()
     campo_clasificacion = ttk.Combobox(pestaña_agregar, values=clasificaciones_nombres)
     campo_clasificacion.pack()
 
-    etiqueta_marca = tk.Label(pestaña_agregar, text="Marca:")
+    etiqueta_marca = tk.Label(pestaña_agregar, text="Marca:", bg="springGreen3", fg="white")
     etiqueta_marca.pack()
     campo_marca = ttk.Combobox(pestaña_agregar, values=marcas_nombres)
     campo_marca.pack()
@@ -113,7 +114,7 @@ def agregar_registro():
         conexion.commit()
 
         # Mostrar mensaje de confirmación
-        etiqueta_confirmacion.config(text="Registro agregado correctamente")
+        etiqueta_confirmacion.config(text="Registro agregado correctamente", bg="springGreen3", fg="white")
 
     # Crear un botón para agregar el registro
     boton_agregar = tk.Button(pestaña_agregar, text="Agregar", command=agregar)
@@ -158,12 +159,12 @@ def eliminar_registro():
             conexion.commit()
 
             # Mostrar mensaje de confirmación
-            etiqueta_confirmacion.config(text="Registro eliminado correctamente")
+            etiqueta_confirmacion.config(text="Registro eliminado correctamente", bg="springGreen3", fg="white")
 
             # Refrescar el Combobox después de eliminar el registro
             refrescar_combobox()
         else:
-            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro")
+            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro", bg="springGreen3", fg="white")
 
     # Crear un Combobox con los registros y sus IDs
     campo_id = ttk.Combobox(pestaña_eliminar)
@@ -224,30 +225,30 @@ def actualizar_registro():
             conexion.commit()
 
             # Mostrar mensaje de confirmación
-            etiqueta_confirmacion.config(text="Registro actualizado correctamente")
+            etiqueta_confirmacion.config(text="Registro actualizado correctamente", bg="springGreen3", fg="white")
         else:
-            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro")
+            etiqueta_confirmacion.config(text="No se ha seleccionado ningún registro", bg="springGreen3", fg="white")
 
     def refrescar():
         refrescar_combobox()
         etiqueta_confirmacion.config(text="")
 
-    etiqueta_nombre = tk.Label(pestaña_actualizar, text="Nuevo nombre:")
+    etiqueta_nombre = tk.Label(pestaña_actualizar, text="Nuevo nombre:", bg="springGreen3", fg="white")
     etiqueta_nombre.pack()
     campo_nombre = tk.Entry(pestaña_actualizar)
     campo_nombre.pack()
 
-    etiqueta_precio = tk.Label(pestaña_actualizar, text="Nuevo precio:")
+    etiqueta_precio = tk.Label(pestaña_actualizar, text="Nuevo precio:", bg="springGreen3", fg="white")
     etiqueta_precio.pack()
     campo_precio = tk.Entry(pestaña_actualizar)
     campo_precio.pack()
 
-    etiqueta_clasificacion = tk.Label(pestaña_actualizar, text="Nueva clasificación:")
+    etiqueta_clasificacion = tk.Label(pestaña_actualizar, text="Nueva clasificación:", bg="springGreen3", fg="white")
     etiqueta_clasificacion.pack()
     combobox_clasificacion = ttk.Combobox(pestaña_actualizar)
     combobox_clasificacion.pack()
 
-    etiqueta_marca = tk.Label(pestaña_actualizar, text="Nueva marca:")
+    etiqueta_marca = tk.Label(pestaña_actualizar, text="Nueva marca:", bg="springGreen3", fg="white")
     etiqueta_marca.pack()
     combobox_marca = ttk.Combobox(pestaña_actualizar)
     combobox_marca.pack()
@@ -296,7 +297,7 @@ def calcular_precio_promedio():
 
     # Mostrar el resultado del precio promedio en una etiqueta
     etiqueta_promedio = tk.Label(pestaña_calcular)
-    etiqueta_promedio.config(text=f"Precio promedio de las bebidas: {round(precio_promedio, 2)}")
+    etiqueta_promedio.config(text=f"Precio promedio de las bebidas: {round(precio_promedio, 2)}", bg="springGreen3", fg="white")
     etiqueta_promedio.pack()
 
     # Consultar la cantidad de bebidas por marca
@@ -311,12 +312,12 @@ def calcular_precio_promedio():
 
     # Mostrar la cantidad de bebidas por marca en una etiqueta
     etiqueta_marcas = tk.Label(pestaña_calcular)
-    etiqueta_marcas.config(text="Cantidad de bebidas por marca:")
+    etiqueta_marcas.config(text="Cantidad de bebidas por marca:", bg="springGreen3", fg="white")
     etiqueta_marcas.pack()
 
     for marca in marcas:
         etiqueta_marca = tk.Label(pestaña_calcular)
-        etiqueta_marca.config(text=f"{marca[0]}: {marca[1]} bebidas")
+        etiqueta_marca.config(text=f"{marca[0]}: {marca[1]} bebidas", bg="springGreen3", fg="white")
         etiqueta_marca.pack()
 
     # Consultar la cantidad de bebidas por clasificación
@@ -331,19 +332,22 @@ def calcular_precio_promedio():
 
     # Mostrar la cantidad de bebidas por clasificación en una etiqueta
     etiqueta_clasificaciones = tk.Label(pestaña_calcular)
-    etiqueta_clasificaciones.config(text="Cantidad de bebidas por clasificación:")
+    etiqueta_clasificaciones.config(text="Cantidad de bebidas por clasificación:", bg="springGreen3", fg="white")
     etiqueta_clasificaciones.pack()
 
     for clasificacion in clasificaciones:
         etiqueta_clasificacion = tk.Label(pestaña_calcular)
-        etiqueta_clasificacion.config(text=f"{clasificacion[0]}: {clasificacion[1]} bebidas")
+        etiqueta_clasificacion.config(text=f"{clasificacion[0]}: {clasificacion[1]} bebidas", bg="springGreen3", fg="white")
         etiqueta_clasificacion.pack()
-
 
 # Crear la ventana principal
 ventana = tk.Tk()
 ventana.title("Gestión de Bebidas")
-ventana.geometry("600x400")
+ventana.geometry("440x320")
+
+# Crear un estilo temático
+style = ThemedStyle(ventana)
+style.set_theme("equilux")
 
 # Crear un control de pestañas para navegar entre las diferentes funcionalidades
 pestañas = ttk.Notebook(ventana)
