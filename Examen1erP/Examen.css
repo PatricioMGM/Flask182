@@ -1,9 +1,15 @@
 body{
-align-content: center;
+    align-content: center;
+    background-image: url("fondo_examen.avif");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+
 }
 
 title{
-color: #F3FF00;
+    color: #F3FF00;
 }
 
 th {
@@ -21,9 +27,18 @@ td {
     text-align: center;
 }
 
-.tabla{
+.contenedor{
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     background-image: url("pexels-anna-shvets-3683056,jpg");
+}
+
+table{
+    margin: auto;
+}
+
+.titulo{
+    color: #F3FF00;
+    text-align: center;
 }
