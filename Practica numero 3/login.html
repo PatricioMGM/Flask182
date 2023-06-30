@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .focusWithText {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="email" onblur="onEmailBlur(event)">
+    <label for="email" onclick="onEmailLabelClick(event)">Email</label>
+    <br>
+    <input type="password" id="password" onfocus="onPasswordFocus(event)">
+    
+    <script>
+        var activeElement;
+        var eyeCovered = false;
+        var blinking = null;
+        var eyeL = document.getElementById('eyeL');
+        var eyeR = document.getElementById('eyeR');
+        var eyeScale = 0.8;
+
+        function onEmailBlur(e) {
+            activeElement = null;
+            setTimeout(function() {
+                if(activeElement == "email"){
+                }else{
+                    if(e.target.value == ""){
+                        e.target.parentElement.classList.remove("focusWithText");
+                    }
+                    //start blinking
+                    resetFace();
+                }
+            }, 100);
+        }
+
+        function onEmailLabelClick(e) {
+            activeElement = "email";
+        }
+
+        function onPasswordFocus(e) {
+            activeElement = "password";
+            if(!eyeCovered){
+                coverEyes();
+            }
+        }
+
+        function stopBlinking(){
+            //stop blinking code goes here
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+    </script>
+</body>
+</html>
+lñ
