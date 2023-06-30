@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -36,7 +36,7 @@ def guardar():
         mysql.connection.commit()
         curInsert.close()
     flash("Se ha guardado el nuebo album")
-    return render_template("index.html")
+    return redirect("/")
 
 @app.route('/eliminar')
 def eliminar():
