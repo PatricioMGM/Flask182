@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <br>
+        <h1>¿Esta seguro de que desea eliminar el registro?</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Nombre</td>
+                <td>Artistda</td>
+                <td>Año de publicacion</td>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ consulta.0 }}</td>
+                    <td>{{consulta.1}}</td>
+                    <td>{{consulta.2}}</td>
+                    <td>{{consulta.3}}</td>
+                    <td>
+                        <a href="/eliminar/{{ consulta.0 }}">eliminar</a>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+
+</center>
+
+
+
+</body>
+</html>
