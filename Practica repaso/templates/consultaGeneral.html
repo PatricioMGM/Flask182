@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .thead{
+            align-content: center;
+            text-align: center;
+        }
+        tbody{
+            align-content: center;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <center>
+        <h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </h1>
+
+    <h1>Todas las frutas registradas:</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Fruta</td>
+                <td>Temporada</td>
+                <td>Precio</td>
+                <td>Stock</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for frutas in datos%}
+            <tr>
+                <td>{{ frutas.0}}</td>
+                <td>{{ frutas.1}}</td>
+                <td>{{ frutas.2}}</td>
+                <td>{{ frutas.3}}</td>
+                <td>{{ frutas.4}}</td>
+                <td>
+                <a href="/editargen/{{ frutas.0 }}">Editar</a>
+                <a href="/eliminargen/{{ frutas.0 }}">Eliminar</a>
+                </td>
+            </tr>
+            {%endfor%}
+
+        </tbody>
+    </table>
+
+    <br><br>
+    <a href="{{ url_for('menu') }}">Regresar al menu</a>
+
+
+    </center>
+</body>
+</html>

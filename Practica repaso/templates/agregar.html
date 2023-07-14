@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <center><h1>Agregar producto</h1>
+            <h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            </h1>
+
+            <form action="/agregarf" method="post">
+
+                <label>Nombre de la fruta</label>
+                <input type="text" name="fruta">
+                
+                <label>Temporada</label>
+                <input type="text" name="temporada">
+                
+                <label>Precio</label>
+                <input type="number" name="precio" step="0.01">
+                
+                <label>Stock</label>
+                <input type="number" name="stock" step="0.01">
+
+                <button type="submit"></button>
+                
+            </form>
+            <br><br>
+            <a href="/menu.html">Regresar al menu</a>
+
+
+        </center>
+</body>
+</html>
