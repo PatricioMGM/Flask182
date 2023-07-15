@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .thead{
+            align-content: center;
+            text-align: center;
+        }
+        tbody{
+            align-content: center;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <center>
+        <h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </h1>
+
+    <h1>Todas las flores registradas:</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Flor</td>
+                <td>Cantidad</td>
+                <td>Precio</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for flo in dflores%}
+            <tr>
+                <td>{{ flo.0}}</td>
+                <td>{{ flo.1}}</td>
+                <td>{{ flo.2}}</td>
+                <td>{{ flo.3}}</td>
+                <td>
+                <a href="#/{{ flo.0 }}">Editar</a>
+                <a href="#/{{ flo.0 }}">Eliminar</a>
+                </td>
+            </tr>
+            {%endfor%}
+
+        </tbody>
+    </table>
+
+    <br><br>
+    <a href="/iragregar">Insertar un nuevo registro</a>
+    <br>
+    <a href="/irconsultaespecifica">Consultar por nombre</a>
+
+
+    </center>
+</body>
+</html>

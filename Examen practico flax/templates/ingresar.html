@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <center><h1>Agregar producto</h1>
+            <h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            </h1>
+
+            <form action="/insertar" method="post">
+
+                <label>Nombre de la flor</label>
+                <input type="text" name="flor">
+                
+                <label>Cantidad</label>
+                <input type="number" name="cantidad">
+                
+                <label>Precio</label>
+                <input type="number" name="precio" step="0.01">
+
+                <button type="submit"></button>
+                
+            </form>
+            <br><br>
+
+        </center>
+</body>
+</html>

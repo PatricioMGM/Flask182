@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .conjunto {
+            display: flex;
+            margin: auto;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <form action="/updategen" method="post">
+        <div class="conjunto">
+            <label>ID</label>
+            <input type="text" name="id" value="{{ flor.0 }}" readonly>
+        </div>
+        <div class="conjunto">
+            <label>Nombre de la flor</label>
+            <input type="text" name="fruta" value="{{ flor.1 }}">
+        </div>
+        <div class="conjunto">
+            <label>Cantidad</label>
+            <input type="number" name="temporada" value="{{ flor.2 }}">
+        </div>
+        <div class="conjunto">
+            <label>Precio</label>
+            <input type="number" name="precio" value="{{ flor.3 }}" step="0.01">
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

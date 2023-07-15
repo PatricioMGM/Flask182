@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .conjunto {
+            display: flex;
+            margin: auto;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        table {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Consultar por nombre</h1>
+    <form action="/consultaespecifica" method="post">
+        <div class="conjunto">
+        <label for="">Ingrese el nombre de la fruta</label>
+        <input type="text" name= "flor">
+        </div>
+        <button type="submit">Buscar</button>
+    </form>
+    {% if flor %}
+        <table>
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Fruta</td>
+                    <td>Temporada</td>
+                    <td>Precio</td>
+                    <td>Stock</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ flor.0 }}</td>
+                    <td>{{ flor.1 }}</td>
+                    <td>{{ flor.2 }}</td>
+                    <td>{{ flor.3 }}</td>
+                    <td>
+                    <a href="/ireditar/{{ flor.0 }}">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
