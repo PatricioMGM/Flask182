@@ -25,6 +25,13 @@ def index():
 def agregar():
     return render_template('ingresar.html')
 
+@app.route('/irgeneral')
+def irgeneral():
+    cgen = mysql.connection.cursor()
+    cgen.execute('select * from tbFlores')
+    flores = cgen.fetchall()
+    
+    return render_template('general.html', dflores = flores)
 
 @app.route('/insertar', methods= ['POST'])
 def insertar():
@@ -72,8 +79,21 @@ def ireditar(id):
     
     return render_template('editarflor.html', flor = datosflor)
 
-@app.route
+@app.route('/editar', methods=['POST'])
+def editar():
+    if request.method == 'POST':
+        vid = request.form['id']
+        vflor = request.form['flor']
+        vcantidad = request.form['cantidad']
+        vprecio = request.form['precio']
 
+        
+        curupgen = mysql.connection.cursor()
+        curupgen.execute('UPDATE tbFlores SET nombre = %s, cantidad = %s, precio = %s WHERE id = %s', (vflor, vcantidad, vprecio, vid))
+        mysql.connection.commit()
+        
+        flash("Se actualizó correctamente")
+        return redirect(url_for('irgeneral'))
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

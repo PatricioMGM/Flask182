@@ -21,18 +21,18 @@
     </style>
 </head>
 <body>
-    <form action="/updategen" method="post">
+    <form action="/editar" method="post">
         <div class="conjunto">
             <label>ID</label>
             <input type="text" name="id" value="{{ flor.0 }}" readonly>
         </div>
         <div class="conjunto">
             <label>Nombre de la flor</label>
-            <input type="text" name="fruta" value="{{ flor.1 }}">
+            <input type="text" name="flor" value="{{ flor.1 }}">
         </div>
         <div class="conjunto">
             <label>Cantidad</label>
-            <input type="number" name="temporada" value="{{ flor.2 }}">
+            <input type="number" name="cantidad" value="{{ flor.2 }}">
         </div>
         <div class="conjunto">
             <label>Precio</label>
